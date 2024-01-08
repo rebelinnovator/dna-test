@@ -119,17 +119,6 @@ const CanvasContextProvider = ({ children }) => {
     },
   };
 
-  const handleKeyDown = useCallback(
-    (event) => {
-      if (event.key === "Delete") {
-        deleteElement();
-      } else if (["a", "A"].includes(event.key) && event.ctrlKey) {
-        event.preventDefault();
-        selectAllElement();
-      }
-    },
-    [deleteElement, selectAllElement]
-  );
 
   const outSideClickHandler = () => {
     isSelectAll.current = false;
@@ -146,13 +135,11 @@ const CanvasContextProvider = ({ children }) => {
   }, []);
 
   React.useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("mousedown", handleMouseDown);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("mousedown", handleMouseDown);
     };
-  }, [handleKeyDown, handleMouseDown]);
+  }, [handleMouseDown]);
 
   return (
     <CanvasContext.Provider value={context}>{children}</CanvasContext.Provider>
